@@ -8,27 +8,27 @@ describe Guard::JRubyRSpec::Runner do
   describe '#run' do
 
     before(:each) do
-      Guard::JRubyRSpec::Runner::UI.stub(:info)
+      allow(Guard::JRubyRSpec::Runner::UI).to receive(:info)
     end
 
     it 'keeps the RSpec global configuration between runs' do
-      RSpec::Core::Runner.stub(:run)
+      allow(RSpec::Core::Runner).to receive(:run)
       orig_configuration = ::RSpec.configuration
-      ::RSpec.should_receive(:instance_variable_set).with(:@configuration, orig_configuration)
+      expect(::RSpec).to receive(:instance_variable_set).with(:@configuration, orig_configuration)
 
       subject.run(['spec/foo'])
     end
 
     context 'when passed an empty paths list' do
       it 'returns false' do
-        subject.run([]).should be_falsey
+        expect(subject.run([])).to be_falsey
       end
     end
 
     context 'when one of the source files is bad' do
       it 'recovers from syntax errors in files by displaying the error' do
-        RSpec::Core::Runner.stub(:run).and_raise(SyntaxError.new('Bad Karma'))
-        Guard::UI.should_receive(:error).at_least(1).times
+        allow(RSpec::Core::Runner).to receive(:run).and_raise(SyntaxError.new('Bad Karma'))
+        expect(Guard::UI).to receive(:error).at_least(1).times
         expect {
           subject.run(['spec/foo'])
         }.to throw_symbol(:task_has_failed)

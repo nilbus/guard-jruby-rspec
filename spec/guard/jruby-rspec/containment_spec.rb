@@ -11,7 +11,7 @@ class Guard::JRubyRSpec
       end
 
       it 'uses a default error_handler' do
-        Guard::UI.should_receive(:error).at_least(1).times
+        expect(Guard::UI).to receive(:error).at_least(1).times
         expect { containment.protect { raise 'busted' } }.to throw_symbol(:task_has_failed)
       end
 
@@ -19,9 +19,9 @@ class Guard::JRubyRSpec
         subject(:containment) { described_class.new(:error_handler => lambda { |error| @custom_handler_called = true }) }
 
         it 'calls the custom error_handler' do
-          Guard::UI.should_receive(:error).never
+          expect(Guard::UI).to receive(:error).never
           expect { containment.protect { raise 'busted' } }.to throw_symbol(:task_has_failed)
-          @custom_handler_called.should be_truthy
+          expect(@custom_handler_called).to be_truthy
         end
       end
     end
