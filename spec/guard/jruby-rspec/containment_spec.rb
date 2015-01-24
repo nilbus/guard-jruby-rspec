@@ -21,7 +21,7 @@ class Guard::JRubyRSpec
         it 'calls the custom error_handler' do
           Guard::UI.should_receive(:error).never
           expect { containment.protect { raise 'busted' } }.to throw_symbol(:task_has_failed)
-          @custom_handler_called.should be_true
+          @custom_handler_called.should be_truthy
         end
       end
     end
