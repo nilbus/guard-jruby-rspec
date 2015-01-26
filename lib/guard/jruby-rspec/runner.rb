@@ -4,6 +4,7 @@ require 'guard/jruby-rspec/containment'
 module Guard
   class JRubyRSpec
     class Runner
+      attr_accessor :options
 
       def initialize(options = {})
         @options = {
@@ -49,6 +50,10 @@ module Guard
           end
           ::RSpec.instance_variable_set(:@configuration, orig_configuration)
         end
+      end
+
+      def run_all
+        run(options[:spec_paths])
       end
 
       def parsed_or_default_formatter
