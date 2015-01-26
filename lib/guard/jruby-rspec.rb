@@ -4,7 +4,7 @@ require 'guard/jruby-rspec/reloaders'
 module Guard
   class JRubyRSpec < ::Guard::RSpec
     autoload :Runner,       'guard/jruby-rspec/runner'
-    autoload :Inspector,    'guard/jruby-rspec/inspector'
+    # autoload :Inspector,    'guard/jruby-rspec/inspector'
 
     def initialize(options = {})
       @options = {
@@ -39,7 +39,7 @@ module Guard
       # ideally we would bypass the Guard::RSpec initializer
       super @options.merge(watchers: watchers)
 
-      @inspector = Inspector.new(@options)
+      # @inspector = Inspector.new(@options)
       @runner = Runner.new(@options)
       @reloaders = set_up_reloaders(@options)
     end
