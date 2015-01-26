@@ -1,5 +1,3 @@
-require 'guard'
-require 'guard/guard'
 require 'guard/rspec'
 require 'guard/jruby-rspec/reloaders'
 
