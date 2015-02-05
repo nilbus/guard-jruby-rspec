@@ -1,0 +1,7 @@
+# This eliminates the stty warning.
+interactor :simple
+
+guard 'rspec', :cmd => 'rspec' do
+  watch(%r{^spec/.+_spec_for_example\.rb$})
+end
+

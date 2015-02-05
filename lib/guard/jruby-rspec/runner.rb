@@ -1,10 +1,11 @@
 require 'rspec'
+require 'guard/rspec/notifier'
 require 'guard/jruby-rspec/containment'
 
 module Guard
-  class JRubyRSpec
+  class JRubyRSpec < ::Guard::RSpec
     class Runner
-      attr_accessor :options
+      attr_accessor :options, :notifier #, :inspector
 
       def initialize(options = {})
         @options = {
@@ -14,6 +15,8 @@ module Guard
 
         @pipefile = options[:pipefile]
         @pipefile ||= ".guard-jruby-rspec-pipe"
+        # @inspector = Inspectors::Factory.create(@options)
+        @notifier = RSpec::Notifier.new(@options)
         cleanup
       end
 
